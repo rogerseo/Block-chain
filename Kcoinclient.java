@@ -49,10 +49,11 @@ public class Kcoinclient {
     private static String hostname;
     private static int port;
        
-    public Kcoinclient() {                 // ±¸¼ºÀÚ¿¡¼­ ÃÊ±âÈ­ ½ÃÅ´
+
+    public Kcoinclient() {                 // »ý¼ºÀÚ¿¡¼­ ÃÊ±âÈ­ ½ÃÅ´
         
     	prepareGUI();
-       
+  
     	// ÇÁ·Î±×·¥ ÆíÀÇ¸¦ À§ÇØ BlockÀÇ ÃÑ ¼ö¸¦ °áÁ¤ÇÑ´Ù. 
         // ¿ø¾ÈÀº ÆÄÀÏ¿¡ BlockÁ¤º¸¸¦ ÀúÀå ÇÔÀ¸·Î ½Ã½ºÅÛ ¸Þ¸ð¸®¿¡´Â ÇöÀç Block Á¤º¸¸¸ ÇÊ¿äÇÏ´Ù.
         // ÀüÃ¼ BlockÀ» ¸ðµÎ ¸Þ¸ð¸®·Î °¡Áö°í ¿À´Â °Ç ºÒÇÊ¿ä ÇÏ´Ù.          
@@ -61,7 +62,7 @@ public class Kcoinclient {
         
 	public static void main(String[] args) {  
 	
-		   // Block ÃÊ±âÈ­ ÇÊ¿ä/½Ã°£ ¼³Á¤ ÇÊ¿ä/ º¸³¾¶§ ¸ðµç Block ´Ù º¸³»¾ß ÇÏ³ª?? No!!! Áö±Ý Block ¸¸
+		     // Block ÃÊ±âÈ­ ÇÊ¿ä/½Ã°£ ¼³Á¤ ÇÊ¿ä/ º¸³¾¶§ ¸ðµç Block ´Ù º¸³»¾ß ÇÏ³ª?? No!!! Áö±Ý Block ¸¸
 				
 		     Kcoinclient awtControlDemo = new Kcoinclient();
              awtControlDemo.showButton();
@@ -105,18 +106,17 @@ public class Kcoinclient {
 	        int index = 0 ;    // ÇÁ·Î±×·¥ ¼öÇà Àü, ¸î¹øÂ° Block ÀÎÁö È®ÀÎ ÇÑ´Ù.
 	        // ¸¶Áö¸· BlockÀ» ÀÐ¾î ¿À°í ±× ÀÎµ¦½º¸¦ È®ÀÎÇØ ¾ßÇÑ´Ù. ¸¶Áö¸· BlockÀº ÆÄÀÏ¿¡ ÀÖ´Ù.
 	        // ÀÐ¾î ¿Â BlockÀ» ´Ù¸¥ ½Ã°£ÀÌ ¸ÂÁö ¾Ê´Ù¸é ´Ù¸¥ »ç¶÷°úµµ ºñ±³ ÇØ¾ß ÇÑ´Ù.
-	        // ¿©±â¼­´Â Block¿¡¼­ ÀÐ¾î ¿Ô°í ÀÐ¾î ¿Â °á°ú°¡ 0 ÀÌ¶ó°í °¡Á¤ÇÑ´Ù.
-	        	      
+	        // ¿©±â¼­´Â Block¿¡¼­ ÀÐ¾î ¿Ô°í ÀÐ¾î ¿Â °á°ú°¡ 0 ÀÌ¶ó°í °¡Á¤ÇÑ´Ù.	        	      
 	        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	        // »ó´Ü¿¡ ¸ðµç ÃÊ±âÈ­¸¦ ¿Ï·á ÇÑ´Ù.
 	        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	        // Block »ý¼º ¾Ë°í¸®Áò ¼öÇà( °Å·¡ ³»¿ªÀ» ¼ö½ÅÇÏ¿© ÇöÀç Block¿¡ ¾÷µ¥ÀÌÆ® / 13ºÐ °áÁ¤ ½Ã°£¿¡ °áÁ¤ÇÏ¿© Broadcast / 14ºÐ¿¡ °áÁ¤µÈ BlockÀ» ÀúÀåÇÔ)		        
-	      
-	        
+	      	        
 	        while (true) {      //º¯¼ö ÇÒ´çÀ» ÃÖ´ëÇÑ ÁÙÀÎ´Ù.	        	
 	        	
 	        	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	        	//½Ã°£ È®ÀÎ
+	        	
 	        	
 	        	Date date = new Date();   //while ¹® ¾ÈÀ¸·Î µé¾î¿Í¾ß ÇÑ´Ù. ¾È±×·¯¸é ½Ã°£ update°¡ ¾ÈµÈ´Ù.
 	        	DateFormat df = new SimpleDateFormat("mm");  // ºÐ¸¸ »Ì¾È ³½´Ù.	 	    
@@ -145,17 +145,18 @@ public class Kcoinclient {
 		        		         block[index] = new Block();            //°´Ã¼¿¡ ¹Ýµå½Ã °ªÀ» ÁØ´Ù ¾È±×·¯¸é Null Ponit ¹ß»ý
 		        		             		        		           
 		        		         System.out.println("¸î¹øÂ° ºí¶ô:" + index);
-		        		                 		        		        		     
-		        		         
-		        		   	     for (int i = 0; i < 1000; i++) {  //1¾ïÀ» Block¿¡ ÇÒ´çÇÏ°í ÇÏ³ª¾¿ Reset ÇÔ.
+		        		                 		        		        		     		        		   	     
+		        		         for (int i = 0; i < 1000; i++) {  //1¾ïÀ» Block¿¡ ÇÒ´çÇÏ°í ÇÏ³ª¾¿ Reset ÇÔ.
 		        		   	    	 
-		        	                 block[index].tran_list[i] =  Kcoinp2pserver.tran_list0[i];    // - ¼ö¶ô Àü  + ¼ö¶ô ÇÔ                                                         //  System.out.format("%d = %s%n", i, wallet[i]); // Ãâ·ÂÇÏ±â   	      
-		         	                 //block¿¡ Time stamps Ãß°¡
 		        	                 
-		        	                 // Kcoinp2pserver.tran_list0[i].reset();  // java °¡ ´Ù¸£¸é Á¢±Ù ºÒ°¡
-		        		   	     }
+		        		        	 block[index].tran_list[i] =  Kcoinp2pserver.tran_list0[i];
+		        	                 
+		        	                 // Block¿¡ °Å·¡ ³»¿ëÀ» ´Ù ÀúÀå ÇÏ°í °Å·¡ ³»¿ë ÀúÀå¼Ò¸¦ Reset ÇØ¾ß ÇÏ´Âµ¥....    
+		        		         }
 		        		   	     
-		        		   	     
+		        		         Kcoinp2pserver.tran_reset0 = true;
+		        		         
+		        		         
 		        		         block_out.writeObject(block[index]);    
 		        		         block_out.flush();           // flush
 		        	             } catch (UnknownHostException ex) {
@@ -175,7 +176,7 @@ public class Kcoinclient {
 			        		 System.out.println("");		        		 
 		        	}          
 		        }
-	 	   	 		 	        
+
 	 	       if ( df.format(date).equals("13") )
 		        {	
 	 	   	 		
@@ -196,10 +197,11 @@ public class Kcoinclient {
 		        		   	    	 
 		        	                 block[index].tran_list[i] =  Kcoinp2pserver.tran_list1[i];    // - ¼ö¶ô Àü  + ¼ö¶ô ÇÔ                            	      
 		        	                 //Kcoinp2pserver.tran_list1[i].reset(); // java°¡ ´Ù¸£¸é Á¢±Ù ºÒ°¡   
-		        	                 		             
-		         		             
+		        	                 		             		         		             
 		        		   	     } 		        		   	  		        		           		        		         
 		        		        		 
+		        		   	     Kcoinp2pserver.tran_reset1 = true;
+		        		   	     
 		        		         block_out.writeObject(block[index]);
 		        		       
 		        		         block_out.flush();           // flush	         
@@ -220,8 +222,7 @@ public class Kcoinclient {
 			        		 System.out.println("");		        		 
 		        	}          
 		        }
-	 	        
-	 	        
+	 	        	 	        
 	 	       if ( df.format(date).equals("23") )
 		        {	
 	 	   	 		
@@ -241,10 +242,12 @@ public class Kcoinclient {
 		        		   	    	 
 		        	                 block[index].tran_list[i] =  Kcoinp2pserver.tran_list2[i];    // - ¼ö¶ô Àü  + ¼ö¶ô ÇÔ                                                         //  System.out.format("%d = %s%n", i, wallet[i]); // Ãâ·ÂÇÏ±â   	      
 		         		             
-		        	                 //Kcoinp2pserver.tran_list2[i].reset();
+		        	                 
 		        	                  
 		        		   	     } 		        		   	  		        		           		        		         
 		        		        		 
+		        		   	     Kcoinp2pserver.tran_reset2 = true;
+		        		   	   
 		        		         block_out.writeObject(block[index]);
 		        		       		        		         
 		        		         block_out.flush();           // flush	         
@@ -265,8 +268,7 @@ public class Kcoinclient {
 			        		 System.out.println("");		        		 
 		        	}          
 		        }
-	 	         
-	 	       
+	 	         	 	       
 	 	       if ( df.format(date).equals("33") )
 		        {	
 	 	   	 		
@@ -288,9 +290,12 @@ public class Kcoinclient {
 		        		   	    	 
 		        	                 block[index].tran_list[i] =  Kcoinp2pserver.tran_list3[i];    // - ¼ö¶ô Àü  + ¼ö¶ô ÇÔ                                                         //  System.out.format("%d = %s%n", i, wallet[i]); // Ãâ·ÂÇÏ±â   	      
 		         		             
-		        	                 //Kcoinp2pserver.tran_list3[i].reset();       
+		        	                        
 		        		   	     } 		        		   	  		        		           		        		         
-		        		        		 
+		        		        	
+		        		   	     Kcoinp2pserver.tran_reset3 = true;
+		        		   	   
+		        		   	   
 		        		         block_out.writeObject(block[index]);
 		        		       		         
 		        		         block_out.flush();           // flush	         
@@ -330,9 +335,11 @@ public class Kcoinclient {
 		        		   	     for (int i = 0; i < 1000; i++) {  //1¾ïÀ» Block¿¡ ÇÒ´çÇÏ°í ÇÏ³ª¾¿ Reset ÇÔ.
 		        		   	    	 
 		        	                 block[index].tran_list[i] =  Kcoinp2pserver.tran_list4[i];    // - ¼ö¶ô Àü  + ¼ö¶ô ÇÔ                                                           	      
-		        	                 //Kcoinp2pserver.tran_list4[i].reset();		         		             		        	                 		        		   	   
+		        	                 		         		             		        	                 		        		   	   
 		        		   	     }
-		        	                                            		        	        
+		        	                 
+		        		   	     Kcoinp2pserver.tran_reset4 = true;
+		        		   	   
 		        		         block_out.writeObject(block[index]);		        		         
 		        		         block_out.flush();           // flush	         
 		        		                 	         
@@ -354,6 +361,7 @@ public class Kcoinclient {
 		           }          
 		        } 	        
 	 	        
+	 	
 	 	       if ( df.format(date).equals("53") )
 		        {	
 	 	   	 		
@@ -374,9 +382,12 @@ public class Kcoinclient {
 		        	                 block[index].tran_list[i] =  Kcoinp2pserver.tran_list5[i];    // - ¼ö¶ô Àü  + ¼ö¶ô ÇÔ                                                         //  System.out.format("%d = %s%n", i, wallet[i]); // Ãâ·ÂÇÏ±â   	      
 		        	                 //Kcoinp2pserver.tran_list5[i].reset();
 		        		   	     } 		        		   	  		        		           		        		         
-		        		        		 
+		        		        	
+		        		   	     Kcoinp2pserver.tran_reset5 = true;
+		        		   	   
+		        		   	     
 		        		         block_out.writeObject(block[index]);
-		        		       
+		        		      
 		        		         block_out.flush();           // flush	         
 		        		                 	         
 		        	             } catch (UnknownHostException ex) {
@@ -396,16 +407,17 @@ public class Kcoinclient {
 			        		 System.out.println("");		        		 
 		        	}          
 		        }
-	 	        	 	       
+	 	        
+	 	       
 	 	    	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	        	//3. 14ºÐ ÀúÀå ½Ã°£¿¡ ÀúÀå¼Ò¿¡ ÀúÀå ÇÊ¿ä
 	 	       
 	 	        current_minute = df.format(date);      // ½Ã°£ ¾÷µ¥ÀÌÆ®
-	 	       
+	 	        
 	 	        //break;       	        
 	            
 	        }   //while ¹® Á¾·á    
-	}           // Main method Á¾·á
+	}           // Main method Á¾·á	
 	
 	
 	   private void prepareGUI() {
@@ -461,12 +473,6 @@ public class Kcoinclient {
 	        t3.setBounds (50,100, 200,30);  
 	        t3.setColumns(16);	        
 	        
-	        /*
-	        x - the new x-coordinate of this component
-	        y - the new y-coordinate of this component
-	        width - the new width of this component
-	        height - the new height of this component
-	        */
 	        
 	        from_wallet = new Label();
 	        //from_wallet.setAlignment(Label.CENTER);
@@ -549,11 +555,12 @@ public class Kcoinclient {
 }
 
 
+
 class Block implements Serializable{         // Á÷¿­È­ Àü¼ÛÀ¸ À§ÇØ¼­ ÇÊ¿äÇÔ.
 	
 	  private int index ;                    // ¸î ¹øÂ° Block ÀÎÁö È®ÀÎ
 	  
-	  private String pre_hash;               // pre block¿¡ ´ëÇÑ Hash °ª
+	  private String pre_hash;               // pre-block¿¡ ´ëÇÑ Hash °ª
 	  
 	  private String this_hash;              // ÀÌ ºí¶ôÀÇ ÃÖÁ¾ ÇØ½¬         
 	  
@@ -635,7 +642,7 @@ class Block implements Serializable{         // Á÷¿­È­ Àü¼ÛÀ¸ À§ÇØ¼­ ÇÊ¿äÇÔ.
 }
 
 
-class transaction implements Serializable{         // Á÷¿­È­ Àü¼ÛÀ¸ À§ÇØ¼­ ÇÊ¿äÇÔ.
+class transaction implements Serializable{   // Á÷¿­È­ Àü¼ÛÀ» À§ÇØ¼­ ÇÊ¿äÇÔ.
 		
 	  private int wallet_from;               //ÁÖÀÇ!!static º¯¼ö´Â º¸³¾ °´Ã¼·Î ¾Èº¸³» Áø´Ù.
 	  
@@ -657,7 +664,8 @@ class transaction implements Serializable{         // Á÷¿­È­ Àü¼ÛÀ¸ À§ÇØ¼­ ÇÊ¿äÇ
 		     timestamps="";  
              pre_hash ="";
              this_hash="";
-      }
+
+	  }
 	 
 	  public void reset(){		  
 		     wallet_from = 0;

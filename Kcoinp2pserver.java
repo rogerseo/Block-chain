@@ -6,27 +6,38 @@ import java.net.*;
 
 public class Kcoinp2pserver {
 	
-	public static transaction[] tran_list0 = new transaction[1000];   // 10만개 거래 내용을 저장. 구성자 안으로 넣으면 Null point 발생
+	
+	public static transaction[] tran_list0 = new transaction[1000];   // 1000개 거래 내용을 저장. 생성자 안으로 넣으면 Null point 발생
 	public static transaction[] tran_list1 = new transaction[1000];    
 	public static transaction[] tran_list2 = new transaction[1000]; 
 	public static transaction[] tran_list3 = new transaction[1000];
 	public static transaction[] tran_list4 = new transaction[1000];
 	public static transaction[] tran_list5 = new transaction[1000];
-		
+	
+	
 	public static int tran_count0 = 0;  
 	public static int tran_count1 = 0;
 	public static int tran_count2 = 0;
 	public static int tran_count3 = 0;
 	public static int tran_count4 = 0;
 	public static int tran_count5 = 0;
-		
+	
+	public static boolean tran_reset0 = false;  
+	public static boolean tran_reset1 = false;
+	public static boolean tran_reset2 = false;
+	public static boolean tran_reset3 = false;
+	public static boolean tran_reset4 = false;
+	public static boolean tran_reset5 = false;
+	
+	
 	public static Block[] block_list0 = new Block[1000];  
-	public static Block[] block_list1 = new Block[1000];   // 10만개 Block내용을 저장. 
+	public static Block[] block_list1 = new Block[1000];   // 1000개 Block내용을 저장. 
 	public static Block[] block_list2 = new Block[1000];
 	public static Block[] block_list3 = new Block[1000];
 	public static Block[] block_list4 = new Block[1000];
 	public static Block[] block_list5 = new Block[1000];
 		
+	
 	public static int block_count0 = 0;  
 	public static int block_count1 = 0;
 	public static int block_count2 = 0;
@@ -35,7 +46,7 @@ public class Kcoinp2pserver {
 	public static int block_count5 = 0;
 	
 	
-    public Kcoinp2pserver() {                 // 생성자는 Class 실행 시 실행 
+    public Kcoinp2pserver() {      // 생성자는 Class 실행 시 실행 
     	
     }
     
@@ -53,6 +64,7 @@ public class Kcoinp2pserver {
                tran_list5[i] = new transaction();
 	   	     } 		        		   	  		        		
 	    
+	
 		for (int i = 0; i < 1000; i++)   {                // 몇개만 가능	 
                block_list0[i] = new Block();
                block_list1[i] = new Block();
@@ -61,6 +73,7 @@ public class Kcoinp2pserver {
                block_list4[i] = new Block();
                block_list5[i] = new Block();   
 	   	     } 		       
+		
 		
 		if (args.length < 1) return;                                  // Close if there is no args(Port)
 		 
@@ -76,14 +89,73 @@ public class Kcoinp2pserver {
 	            	Socket socket = serverSocket.accept();
 	                System.out.println("New client connected");
 	                new ServerThread(socket).start();                
+
+	                // Client에서 Block에 저장이 된 거래 내역은 Reset 한다. 
+	                if (tran_reset0) {
+	             	    
+       		   	         for (int i = 0; i < 1000; i++) {  //1억을 Block에 할당하고 하나씩 Reset 함.		        		   	    	 
+       		   	    	 
+       	                             tran_list0[i].reset();   
+    
+       		   	         } 	
+       		   	         tran_reset0 = false;
+	                }
+	                
+	                else if (tran_reset1) {
+	             	    
+      		   	         for (int i = 0; i < 1000; i++) {  //1억을 Block에 할당하고 하나씩 Reset 함.		        		   	    	 
+      		   	    	 
+      	                             tran_list1[i].reset();   
+      	                 } 		
+      		   	         tran_reset1 = false;
+	                }
+	                
+	                else if (tran_reset2) {
+	             	    
+     		   	         for (int i = 0; i < 1000; i++) {  //1억을 Block에 할당하고 하나씩 Reset 함.		        		   	    	 
+     		   	    	 
+     	                             tran_list2[i].reset();   
+     	                 }
+     		   	         tran_reset2 = false;
+	                }
+	                
+	                else if (tran_reset3) {
+	             	    
+    		   	         for (int i = 0; i < 1000; i++) {  //1억을 Block에 할당하고 하나씩 Reset 함.		        		   	    	 
+    		   	    	 
+    	                             tran_list3[i].reset();   
+    	                 } 		             
+    		   	         tran_reset3 = false;
+	                }
+	                
+	                else if (tran_reset4) {
+	             	    
+   		   	             for (int i = 0; i < 1000; i++) {  //1억을 Block에 할당하고 하나씩 Reset 함.		        		   	    	 
+   		   	    	 
+   	                             tran_list4[i].reset();   
+   	                      } 		
+   		   	              tran_reset4 = false;
+	                }
+	                
+	                else if (tran_reset5) {
+	             	    
+  		   	             for (int i = 0; i < 1000; i++) {  //1억을 Block에 할당하고 하나씩 Reset 함.		        		   	    	 
+  		   	    	 
+  	                             tran_list5[i].reset();   
+  	                      } 		 
+  		   	              tran_reset5 = false;
+	                }   
+	            
 	            }	            
 	        } catch (IOException ex) {
 	            System.out.println("Server exception: " + ex.getMessage());
 	            ex.printStackTrace();
 	        }		        
-  	 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~			
+  	 
+	        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~			
 	}	
 }
+
 
 
 class ServerThread extends Thread {
@@ -125,7 +197,8 @@ class ServerThread extends Thread {
                                           
               System.out.println(a);
               System.out.println(b);              
-                           
+
+              
               if ( tran_time >= 0 && tran_time <10 ) {
             	  
             	      Kcoinp2pserver.tran_list0[Kcoinp2pserver.tran_count0] = tran_temp;
@@ -136,11 +209,10 @@ class ServerThread extends Thread {
             	      
                       }
               
-              
+
               else if ( tran_time >= 10 && tran_time <20) {
         	     
-            	      Kcoinp2pserver.tran_list1[Kcoinp2pserver.tran_count1] = tran_temp;
-            	      
+            	      Kcoinp2pserver.tran_list1[Kcoinp2pserver.tran_count1] = tran_temp;            	      
             	      System.out.println(Kcoinp2pserver.tran_count1);
             	      Kcoinp2pserver.tran_count1++;
             	      System.out.println(Kcoinp2pserver.tran_count1);
@@ -182,8 +254,7 @@ class ServerThread extends Thread {
         	          System.out.println(Kcoinp2pserver.tran_count5);
         	          Kcoinp2pserver.tran_count5++;
         	          System.out.println(Kcoinp2pserver.tran_count5);
-                      }
-             
+                      }             
              }
              
              
