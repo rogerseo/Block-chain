@@ -30,7 +30,16 @@ import javax.imageio.ImageIO;
 import java.awt.Image;
 import javax.swing.*;
 
+
 // P2P 통신에서 송신 / 암호화 / 계좌 update / Block 생성 역활을 함.
+
+//What is Client
+
+//1. Send transaction of my Node
+//2. Create  Block of this Node
+//3. Send Block of this Node
+//4. Compare the Blocks and make decision  
+
 
 public class Kcoinclient {                      
 	
@@ -52,14 +61,12 @@ public class Kcoinclient {
 
     public Kcoinclient() {                 // 생성자에서 초기화 시킴
         
-    	prepareGUI();
-  
+    	prepareGUI(); 
     	// 프로그램 편의를 위해 Block의 총 수를 결정한다. 
         // 원안은 파일에 Block정보를 저장 함으로 시스템 메모리에는 현재 Block 정보만 필요하다.
         // 전체 Block을 모두 메모리로 가지고 오는 건 불필요 하다.          
     }
    
-        
 	public static void main(String[] args) {  
 	
 		     // Block 초기화 필요/시간 설정 필요/ 보낼때 모든 Block 다 보내야 하나?? No!!! 지금 Block 만
@@ -112,6 +119,7 @@ public class Kcoinclient {
 	        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	        // Block 생성 알고리즘 수행( 거래 내역을 수신하여 현재 Block에 업데이트 / 13분 결정 시간에 결정하여 Broadcast / 14분에 결정된 Block을 저장함)		        
 	      	        
+	        
 	        while (true) {      //변수 할당을 최대한 줄인다.	        	
 	        	
 	        	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -120,16 +128,30 @@ public class Kcoinclient {
 	        	
 	        	Date date = new Date();   //while 문 안으로 들어와야 한다. 안그러면 시간 update가 안된다.
 	        	DateFormat df = new SimpleDateFormat("mm");  // 분만 뽑안 낸다.	 	    
-	        	// DateFormat df1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss (z Z)");
+	        	
 	        	TimeZone time = TimeZone.getTimeZone("Asia/Seoul");
 	 	        df.setTimeZone(time);	
 
+	 	        //block time stamps 용도
+   	 	        DateFormat df1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss (z Z)");
+	        	TimeZone time1 = TimeZone.getTimeZone("Asia/Seoul");
+	 	        df1.setTimeZone(time1);	
+
+	 	        // System.out.println(df1.format(date));
+
+	 	        
+                //String a =df1.format(date) ;              
+                //String b = a.substring(14,16);              
+                //System.out.println(b);
+                
+	 	        
 	 	        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	        	//1. 거래 내역을 실시간으로 수신하여 현재 Block에 update 	
 	 	        //2. 13분 결정 시간에 현재까지 거래내역을 update하여 Broadcast
 	 	        //3. Transaction 저장된 내용 Reset 함.(미 구현중)
 	 	        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	        		 	        
 	 	        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 	 	         	     	 	        
+	 	        
 	 	        
 	 	        if ( df.format(date).equals("03") )
 		        {	
@@ -143,9 +165,11 @@ public class Kcoinclient {
 		        		         ObjectOutputStream block_out = new ObjectOutputStream(socket.getOutputStream());	         		
 		        		                		         		        		         		        		         
 		        		         block[index] = new Block();            //객체에 반드시 값을 준다 안그러면 Null Ponit 발생
-		        		             		        		           
+		        		          		         
 		        		         System.out.println("몇번째 블락:" + index);
-		        		                 		        		        		     		        		   	     
+		        		         
+		        		         block[index].settimestamps(df1.format(date));
+		        		         
 		        		         for (int i = 0; i < 1000; i++) {  //1억을 Block에 할당하고 하나씩 Reset 함.
 		        		   	    	 
 		        	                 
@@ -153,12 +177,11 @@ public class Kcoinclient {
 		        	                 
 		        	                 // Block에 거래 내용을 다 저장 하고 거래 내용 저장소를 Reset 해야 하는데....    
 		        		         }
-		        		   	     
+		        		         
 		        		         Kcoinp2pserver.tran_reset0 = true;
-		        		         
-		        		         
+		        		       
 		        		         block_out.writeObject(block[index]);    
-		        		         block_out.flush();           // flush
+		        		         block_out.flush();           
 		        	             } catch (UnknownHostException ex) {
 		        		            System.out.println("Server not found: " + ex.getMessage());
 		        		         } catch (IOException ex) {
@@ -177,6 +200,7 @@ public class Kcoinclient {
 		        	}          
 		        }
 
+	 	        
 	 	       if ( df.format(date).equals("13") )
 		        {	
 	 	   	 		
@@ -191,7 +215,7 @@ public class Kcoinclient {
 		        		         block[index] = new Block();            //객체에 반드시 값을 준다 안그러면 Null Ponit 발생
 		        		             		        		           
 		        		         System.out.println("몇번째 블락:" + index);
-		        		         
+		        		         block[index].settimestamps(df1.format(date));
 		        		        	    
 		        		   	     for (int i = 0; i < 1000; i++) {  //1억을 Block에 할당하고 하나씩 Reset 함.		        		   	    	 
 		        		   	    	 
@@ -238,12 +262,13 @@ public class Kcoinclient {
 		        		             		        		           
 		        		         System.out.println("몇번째 블락:" + index);
 		        		         
+		        		         block[index].settimestamps(df1.format(date));
+		        		         
 		        		   	     for (int i = 0; i < 1000; i++) {  //1억을 Block에 할당하고 하나씩 Reset 함.
 		        		   	    	 
 		        	                 block[index].tran_list[i] =  Kcoinp2pserver.tran_list2[i];    // - 수락 전  + 수락 함                                                         //  System.out.format("%d = %s%n", i, wallet[i]); // 출력하기   	      
 		         		             
-		        	                 
-		        	                  
+		        	                		        	                  
 		        		   	     } 		        		   	  		        		           		        		         
 		        		        		 
 		        		   	     Kcoinp2pserver.tran_reset2 = true;
@@ -284,7 +309,7 @@ public class Kcoinclient {
 		        		             		        		           
 		        		         System.out.println("몇번째 블락:" + index);
 		        		        
-		        		        		        		     
+		        		         block[index].settimestamps(df1.format(date));
 		        		         
 		        		   	     for (int i = 0; i < 1000; i++) {  //1억을 Block에 할당하고 하나씩 Reset 함.
 		        		   	    	 
@@ -332,6 +357,10 @@ public class Kcoinclient {
 		        		             		        		           
 		        		         System.out.println("몇번째 블락:" + index);
 		        		       
+		        		         
+		        		         block[index].settimestamps(df1.format(date));
+		        		         
+		        		         
 		        		   	     for (int i = 0; i < 1000; i++) {  //1억을 Block에 할당하고 하나씩 Reset 함.
 		        		   	    	 
 		        	                 block[index].tran_list[i] =  Kcoinp2pserver.tran_list4[i];    // - 수락 전  + 수락 함                                                           	      
@@ -376,7 +405,10 @@ public class Kcoinclient {
 		        		         block[index] = new Block();            //객체에 반드시 값을 준다 안그러면 Null Ponit 발생
 		        		             		        		           
 		        		         System.out.println("몇번째 블락:" + index);
-		        		         		        		        		        		     		        		         
+		        		         
+		        		         block[index].settimestamps(df1.format(date));
+		        		         
+		        		         
 		        		   	     for (int i = 0; i < 1000; i++) {  //1억을 Block에 할당하고 하나씩 Reset 함.
 		        		   	    	 
 		        	                 block[index].tran_list[i] =  Kcoinp2pserver.tran_list5[i];    // - 수락 전  + 수락 함                                                         //  System.out.format("%d = %s%n", i, wallet[i]); // 출력하기   	      
@@ -407,8 +439,7 @@ public class Kcoinclient {
 			        		 System.out.println("");		        		 
 		        	}          
 		        }
-	 	        
-	 	       
+	 	        	 	       
 	 	    	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	        	//3. 14분 저장 시간에 저장소에 저장 필요
 	 	       
@@ -454,7 +485,7 @@ public class Kcoinclient {
 	        mainFrame.add(statusLabel);
 	        
 	        mainFrame.setVisible(true);
-	    }
+	   }
 	   
 	   private void showButton() {
 		   
@@ -556,17 +587,49 @@ public class Kcoinclient {
 
 
 
-class Block implements Serializable{         // 직열화 전송으 위해서 필요함.
+
+
+
+
+class wallet implements Serializable {
+		
+      private int ID; 
+      private int amount;
+      
+
+      public wallet() {		
+    	     ID = 0;
+		     amount = 0;
+	  }
+	  
+      public int set_amount (int a){        // Set money at the wallet 
+		     amount = a  ;
+		     return amount;
+      }
+	  
+	  public int add_amount (int a){        // Add money at the wallet 
+		     amount = amount + a  ;
+		     return amount;
+      }
+	  
+      public int minus_amount (int a){      // Minus money at the wallet
+     	     amount = amount - a  ;
+	         return amount;
+      }	     	  
+}
+
+
+class Block implements Serializable{         // This is a recording DATA that everyone save.
 	
-	  private int index ;                    // 몇 번째 Block 인지 확인
+	  private int index ;                    // Index of Block.
 	  
 	  private String pre_hash;               // pre-block에 대한 Hash 값
 	  
 	  private String this_hash;              // 이 블락의 최종 해쉬         
 	  
 	  private String timestamps;             // 현재 시간
-	  
-	  private int wallet[] = new int [3000];      // 계좌 30000개 생성
+	  	   
+	  public wallet[] wallet_list = new wallet[3000];
 	  
 	  public transaction[] tran_list = new transaction[1000];    // 10만개 거래 내용을 저장. 구성자 안으로 넣으면 Null point 발생
 	  
@@ -577,10 +640,16 @@ class Block implements Serializable{         // 직열화 전송으 위해서 필요함.
       this_hash="";
       timestamps="";
 
-  	  for (int i = 0; i < wallet.length; i++) {
-  		           wallet[i] = -i;                       // - 수락 전  + 수락 함                                                         //  System.out.format("%d = %s%n", i, wallet[i]); // 출력하기   	      
-  		       } 
+  	  //for (int i = 0; i < wallet.length; i++) {
+  	  //	           wallet[i] = -i;                       // - 수락 전  + 수락 함                                                         //  System.out.format("%d = %s%n", i, wallet[i]); // 출력하기   	      
+  	  //	       } 
 	  
+  	 
+  	  for (int i = 0; i < 3000 ; i++) {
+          wallet_list[i] = new wallet();                       // - 수락 전  + 수락 함                                                         //  System.out.format("%d = %s%n", i, wallet[i]); // 출력하기   	      
+      } 
+  	  
+  	  
   	  for (int i = 0; i < 1000 ; i++) {
 	               tran_list[i] = new transaction();                       // - 수락 전  + 수락 함                                                         //  System.out.format("%d = %s%n", i, wallet[i]); // 출력하기   	      
 	           } 
@@ -605,10 +674,10 @@ class Block implements Serializable{         // 직열화 전송으 위해서 필요함.
 		     return timestamps;
       }
 	   
-   	  public int valueOfwallet(int w){
-		     return wallet[w];
-      }
-   	  
+   	  //public int valueOfwallet(int w){
+   	  //	     return wallet[w];
+      // }
+   	     	  
       //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    	  //값을 setting 가능
    	  
@@ -628,14 +697,14 @@ class Block implements Serializable{         // 직열화 전송으 위해서 필요함.
 		     timestamps= a;
       }
 	  
-	  public void setwallet(int w){
-		     wallet[w] = 0 ;
-      }
+	  //public void setwallet(int w){
+		//     wallet[w] = 0 ;
+      //}
 	  
-	  public void tran_a_to_b(int a, int b , int c){     //계좌 이체
-		     wallet[a] = wallet[a] - c ;
-		     wallet[b] = wallet[b] + c ;
-      }
+	  //public void tran_a_to_b(int a, int b , int c){     //계좌 이체
+		//     wallet[a] = wallet[a] - c ;
+		 //    wallet[b] = wallet[b] + c ;
+      //}
 	  
 	  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	  //값 전송 가능

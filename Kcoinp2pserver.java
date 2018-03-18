@@ -1,102 +1,101 @@
 import java.io.*;                   // Server Socket
 import java.net.*;                 
 
-// P2P 통신 시, 거래 내역과 Block을 수신해주는 역활을 함
-// 시간 단위 수행이 없다. 
+// What is Server
+
+// 1. Receive transaction of other Node and save
+// 2. Receive Block of other Node and save
 
 public class Kcoinp2pserver {
-	
-	
-	public static transaction[] tran_list0 = new transaction[1000];   // 1000개 거래 내용을 저장. 생성자 안으로 넣으면 Null point 발생
+		
+	public static transaction[] tran_list0 = new transaction[1000];   // Save 1000 Transaction List. Do not put this in the creator
 	public static transaction[] tran_list1 = new transaction[1000];    
 	public static transaction[] tran_list2 = new transaction[1000]; 
 	public static transaction[] tran_list3 = new transaction[1000];
 	public static transaction[] tran_list4 = new transaction[1000];
 	public static transaction[] tran_list5 = new transaction[1000];
+		
+	public static int tran_count0 = 0;                               //  How many transaction List in 0~10 minute  
+	public static int tran_count1 = 0;                               //  10~20 minute 
+	public static int tran_count2 = 0;                               //  20~30 minute 
+	public static int tran_count3 = 0;                               //  30~40 minute 
+	public static int tran_count4 = 0;                               //  40~50 minute 
+	public static int tran_count5 = 0;                               //  50~60 minute 
 	
-	
-	public static int tran_count0 = 0;  
-	public static int tran_count1 = 0;
-	public static int tran_count2 = 0;
-	public static int tran_count3 = 0;
-	public static int tran_count4 = 0;
-	public static int tran_count5 = 0;
-	
-	public static boolean tran_reset0 = false;  
-	public static boolean tran_reset1 = false;
-	public static boolean tran_reset2 = false;
-	public static boolean tran_reset3 = false;
-	public static boolean tran_reset4 = false;
-	public static boolean tran_reset5 = false;
-	
-	
-	public static Block[] block_list0 = new Block[1000];  
-	public static Block[] block_list1 = new Block[1000];   // 1000개 Block내용을 저장. 
+	public static boolean tran_reset0 = false;                       //  Reset transaction List in 0~10 minute 
+	public static boolean tran_reset1 = false;                       //  10~20 minute 
+	public static boolean tran_reset2 = false;                       //  10~20 minute 
+	public static boolean tran_reset3 = false;                       //  10~20 minute 
+	public static boolean tran_reset4 = false;                       //  10~20 minute 
+	public static boolean tran_reset5 = false;                       //  10~20 minute 
+		
+	public static Block[] block_list0 = new Block[1000];             //  Save 1000 Blocks from other node 
+	public static Block[] block_list1 = new Block[1000];             
 	public static Block[] block_list2 = new Block[1000];
 	public static Block[] block_list3 = new Block[1000];
 	public static Block[] block_list4 = new Block[1000];
 	public static Block[] block_list5 = new Block[1000];
 		
-	
-	public static int block_count0 = 0;  
+	public static int block_count0 = 0;                              // Block count  
 	public static int block_count1 = 0;
 	public static int block_count2 = 0;
 	public static int block_count3 = 0;
 	public static int block_count4 = 0;
 	public static int block_count5 = 0;
 	
-	
-    public Kcoinp2pserver() {      // 생성자는 Class 실행 시 실행 
-    	
+	public Kcoinp2pserver() {      // Creator 	
     }
     
+	
 	public static void main(String[] args) {
 		
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	    // IF Peer want to connect with other peer then make a socket connection		
-		   
+	    //Initialize values	
+		
 		for (int i = 0; i < 1000; i++) {    	 
-               tran_list0[i] = new transaction();
+               
+			   tran_list0[i] = new transaction();
                tran_list1[i] = new transaction();
                tran_list2[i] = new transaction();
                tran_list3[i] = new transaction();
                tran_list4[i] = new transaction();
                tran_list5[i] = new transaction();
-	   	     } 		        		   	  		        		
-	    
-	
-		for (int i = 0; i < 1000; i++)   {                // 몇개만 가능	 
-               block_list0[i] = new Block();
+	   	     } 		        		   	  		        			   
+		
+		for (int i = 0; i < 1000; i++)   {           
+               
+			   block_list0[i] = new Block();
                block_list1[i] = new Block();
                block_list2[i] = new Block();
                block_list3[i] = new Block();
                block_list4[i] = new Block();
                block_list5[i] = new Block();   
-	   	     } 		       
-		
-		
+	   	     
+		     } 		       
+				
 		if (args.length < 1) return;                                  // Close if there is no args(Port)
 		 
 	        int port = Integer.parseInt(args[0]);
 	        
 	        try (ServerSocket serverSocket = new ServerSocket(port)) {
-	 
+
 	            System.out.println("P2P Server is listening on port " + port);
+
 	            
 	            while (true) {  
 	            	
 	            	// 계속 소켓을 수신을 함	        	            	            	
 	            	Socket socket = serverSocket.accept();
-	                System.out.println("New client connected");
+	                System.out.println("지갑1 수신 완료");
 	                new ServerThread(socket).start();                
 
 	                // Client에서 Block에 저장이 된 거래 내역은 Reset 한다. 
+	              
 	                if (tran_reset0) {
 	             	    
        		   	         for (int i = 0; i < 1000; i++) {  //1억을 Block에 할당하고 하나씩 Reset 함.		        		   	    	 
        		   	    	 
        	                             tran_list0[i].reset();   
-    
        		   	         } 	
        		   	         tran_reset0 = false;
 	                }
@@ -169,24 +168,23 @@ class ServerThread extends Thread {
         block_tran = new ObjectInputStream(socket.getInputStream());     
 	}
 	
-	
     public void run() {
-    
     	
     	try {
              
              Object o = (Object)block_tran.readObject();   // 모든 Object는 Object가 섞여 있어 보안에 유리하다.
              
              char c = o.toString().charAt(0);
-             System.out.println(c); 
-                          
+                                
              // 계속해서 들어오는 Object를 어떻게 쌓을까 알고리즘 필요.             
              // 1. 0~10사이는 다 처리한다. 양이 많아도
              // 1. 10분간 1000까지만 처리한다
              // 2. 시간 단위로 다 받는다.             
              
              if (c == 't') {
-            	
+             
+              System.out.println("거래 내역을 수신 받았습니다.");
+            	 
               transaction tran_temp = (transaction)o;
                          
               String a = tran_temp.valueOftimestamps(); 
@@ -195,37 +193,30 @@ class ServerThread extends Thread {
               
               int tran_time =Integer.parseInt(b);
                                           
-              System.out.println(a);
-              System.out.println(b);              
-
-              
               if ( tran_time >= 0 && tran_time <10 ) {
             	  
             	      Kcoinp2pserver.tran_list0[Kcoinp2pserver.tran_count0] = tran_temp;
-            	               	      
-            	      System.out.println(Kcoinp2pserver.tran_count0);
+            	               	                 	      
             	      Kcoinp2pserver.tran_count0++;                  
-            	      System.out.println(Kcoinp2pserver.tran_count0);
+            	      
+            	      System.out.println("0분~10분까지 거래 저장 수:" + Kcoinp2pserver.tran_count0);
             	      
                       }
               
-
               else if ( tran_time >= 10 && tran_time <20) {
         	     
             	      Kcoinp2pserver.tran_list1[Kcoinp2pserver.tran_count1] = tran_temp;            	      
-            	      System.out.println(Kcoinp2pserver.tran_count1);
+            	      
             	      Kcoinp2pserver.tran_count1++;
-            	      System.out.println(Kcoinp2pserver.tran_count1);
+            	      System.out.println("10분~20분까지 거래 저장 수:" + Kcoinp2pserver.tran_count1);
                       }
-              
               
               else if ( tran_time >= 20 && tran_time <30) {
                   
         	          Kcoinp2pserver.tran_list2[Kcoinp2pserver.tran_count2] = tran_temp;
         	          
-        	          System.out.println(Kcoinp2pserver.tran_count2);
-        	          Kcoinp2pserver.tran_count2++;
-        	          System.out.println(Kcoinp2pserver.tran_count2);
+           	          Kcoinp2pserver.tran_count2++;
+        	          System.out.println("20분~30분까지 거래 저장 수:" + Kcoinp2pserver.tran_count2);
                       }
               
         
@@ -233,50 +224,54 @@ class ServerThread extends Thread {
     	          
             	      Kcoinp2pserver.tran_list3[Kcoinp2pserver.tran_count3] = tran_temp;
             	      
-            	      System.out.println(Kcoinp2pserver.tran_count3);
+            	      
             	      Kcoinp2pserver.tran_count3++;
-            	      System.out.println(Kcoinp2pserver.tran_count3);
+            	      System.out.println("30분~40분까지 거래 저장 수:" + Kcoinp2pserver.tran_count3);
                       }
               
               else if ( tran_time >= 40 && tran_time <50) {
                   
         	          Kcoinp2pserver.tran_list4[Kcoinp2pserver.tran_count4] = tran_temp;
         	          
-        	          System.out.println(Kcoinp2pserver.tran_count4);
+        	          
         	          Kcoinp2pserver.tran_count4++;
-        	          System.out.println(Kcoinp2pserver.tran_count4);
+        	          System.out.println("40분~50분까지 거래 저장 수:" + Kcoinp2pserver.tran_count4);
                       }
               
               else if ( tran_time >= 50 && tran_time <60) {
             	  
         	          Kcoinp2pserver.tran_list5[Kcoinp2pserver.tran_count5] = tran_temp;
         	           
-        	          System.out.println(Kcoinp2pserver.tran_count5);
+        	          
         	          Kcoinp2pserver.tran_count5++;
-        	          System.out.println(Kcoinp2pserver.tran_count5);
+        	          System.out.println("50분~60분까지 거래 저장 수:" + Kcoinp2pserver.tran_count5);
                       }             
-             }
+             }        
              
              
-             if (c == 'b') {
-            	 
+             else if ( c == 'B') {
+            	     
+            	     System.out.println("Block을 수신 받았습니다.");               	 
             	     Block block_tmp = (Block)o;
             	     // 총 수신 모델 만듬
-            	     
+            	                 	     
                      String a = block_tmp.valueOftimestamps();              
                      String b = a.substring(14,16);              
+                     
+                     //System.out.println(a);
+                     //System.out.println(b);
+                     
+                     
                      int block_time =Integer.parseInt(b);
                      
-                     System.out.println(a);
-                     System.out.println(b);              
                      
                      if ( block_time >= 0 && block_time <10 ) {
                    	  
                    	      Kcoinp2pserver.block_list0[Kcoinp2pserver.block_count0] = block_tmp;
                    	               	      
-                   	      System.out.println(Kcoinp2pserver.block_count0);
+                   	      //System.out.println(Kcoinp2pserver.block_count0);
                    	      Kcoinp2pserver.block_count0++;                  
-                   	      System.out.println(Kcoinp2pserver.block_count0);                   	      
+                   	      System.out.println("0분~10분 총 수신 Block 수:" + Kcoinp2pserver.block_count0);                   	      
              
                           }
                                           
@@ -284,9 +279,9 @@ class ServerThread extends Thread {
                	     
                    	      Kcoinp2pserver.block_list1[Kcoinp2pserver.block_count1] = block_tmp;
                    	      
-                   	      System.out.println(Kcoinp2pserver.block_count1);
+                   	      // System.out.println(Kcoinp2pserver.block_count1);
                    	      Kcoinp2pserver.block_count1++;
-                   	      System.out.println(Kcoinp2pserver.block_count1);
+                   	      System.out.println("10분~20분 총 수신 Block 수:" + Kcoinp2pserver.block_count1);
                              }
                      
                      
@@ -294,9 +289,9 @@ class ServerThread extends Thread {
                          
                	          Kcoinp2pserver.block_list2[Kcoinp2pserver.block_count2] = block_tmp;
                	          
-               	          System.out.println(Kcoinp2pserver.block_count2);
+               	          //System.out.println(Kcoinp2pserver.block_count2);
                	          Kcoinp2pserver.block_count2++;
-               	          System.out.println(Kcoinp2pserver.block_count2);
+               	          System.out.println("20분~30분 총 수신 Block 수:" + Kcoinp2pserver.block_count2);
                           }
                      
                
@@ -304,27 +299,27 @@ class ServerThread extends Thread {
            	          
                    	      Kcoinp2pserver.block_list3[Kcoinp2pserver.block_count3] = block_tmp;
                    	      
-                   	      System.out.println(Kcoinp2pserver.block_count3);
+                   	      // System.out.println(Kcoinp2pserver.block_count3);
                    	      Kcoinp2pserver.block_count3++;
-                   	      System.out.println(Kcoinp2pserver.block_count3);
+                   	      System.out.println("30분~40분 총 수신 Block 수:" + Kcoinp2pserver.block_count3);
                           }
                      
                      else if ( block_time >= 40 && block_time <50) {
                          
                	          Kcoinp2pserver.block_list4[Kcoinp2pserver.block_count4] = block_tmp;
                	          
-               	          System.out.println(Kcoinp2pserver.block_count4);
+               	          // System.out.println(Kcoinp2pserver.block_count4);
                	          Kcoinp2pserver.block_count4++;
-               	          System.out.println(Kcoinp2pserver.block_count4);
+               	          System.out.println("40분~50분 총 수신 Block 수:" + Kcoinp2pserver.block_count4);
                           }
                      
                      else if ( block_time >= 50 && block_time <60) {
                    	  
                	          Kcoinp2pserver.block_list5[Kcoinp2pserver.block_count5] = block_tmp;
                	           
-               	          System.out.println(Kcoinp2pserver.block_count5);
+               	          // System.out.println(Kcoinp2pserver.block_count5);
                	          Kcoinp2pserver.block_count5++;
-               	          System.out.println(Kcoinp2pserver.block_count5);
+               	          System.out.println("50분~60분 총 수신 Block 수:" + Kcoinp2pserver.block_count5);
                           }            	     
              
              }
@@ -343,3 +338,5 @@ class ServerThread extends Thread {
              }
     }
 }
+
+
