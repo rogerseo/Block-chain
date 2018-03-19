@@ -84,16 +84,16 @@ public class Kcoinp2pserver {
 	            
 	            while (true) {  
 	            	
-	            	// 계속 소켓을 수신을 함	        	            	            	
+	            		        	            	            	
 	            	Socket socket = serverSocket.accept();
 	                System.out.println("지갑1 수신 완료");
 	                new ServerThread(socket).start();                
 
-	                // Client에서 Block에 저장이 된 거래 내역은 Reset 한다. 
+	                 
 	              
 	                if (tran_reset0) {
 	             	    
-       		   	         for (int i = 0; i < 1000; i++) {  //1억을 Block에 할당하고 하나씩 Reset 함.		        		   	    	 
+       		   	         for (int i = 0; i < 1000; i++) {  		        		   	    	 
        		   	    	 
        	                             tran_list0[i].reset();   
        		   	         } 	
@@ -102,7 +102,7 @@ public class Kcoinp2pserver {
 	                
 	                else if (tran_reset1) {
 	             	    
-      		   	         for (int i = 0; i < 1000; i++) {  //1억을 Block에 할당하고 하나씩 Reset 함.		        		   	    	 
+      		   	         for (int i = 0; i < 1000; i++) {  		        		   	    	 
       		   	    	 
       	                             tran_list1[i].reset();   
       	                 } 		
@@ -111,7 +111,7 @@ public class Kcoinp2pserver {
 	                
 	                else if (tran_reset2) {
 	             	    
-     		   	         for (int i = 0; i < 1000; i++) {  //1억을 Block에 할당하고 하나씩 Reset 함.		        		   	    	 
+     		   	         for (int i = 0; i < 1000; i++) {  		        		   	    	 
      		   	    	 
      	                             tran_list2[i].reset();   
      	                 }
@@ -120,7 +120,7 @@ public class Kcoinp2pserver {
 	                
 	                else if (tran_reset3) {
 	             	    
-    		   	         for (int i = 0; i < 1000; i++) {  //1억을 Block에 할당하고 하나씩 Reset 함.		        		   	    	 
+    		   	         for (int i = 0; i < 1000; i++) {  		        		   	    	 
     		   	    	 
     	                             tran_list3[i].reset();   
     	                 } 		             
@@ -129,7 +129,7 @@ public class Kcoinp2pserver {
 	                
 	                else if (tran_reset4) {
 	             	    
-   		   	             for (int i = 0; i < 1000; i++) {  //1억을 Block에 할당하고 하나씩 Reset 함.		        		   	    	 
+   		   	             for (int i = 0; i < 1000; i++) {  	        		   	    	 
    		   	    	 
    	                             tran_list4[i].reset();   
    	                      } 		
@@ -138,7 +138,7 @@ public class Kcoinp2pserver {
 	                
 	                else if (tran_reset5) {
 	             	    
-  		   	             for (int i = 0; i < 1000; i++) {  //1억을 Block에 할당하고 하나씩 Reset 함.		        		   	    	 
+  		   	             for (int i = 0; i < 1000; i++) {  		        		   	    	 
   		   	    	 
   	                             tran_list5[i].reset();   
   	                      } 		 
@@ -172,14 +172,11 @@ class ServerThread extends Thread {
     	
     	try {
              
-             Object o = (Object)block_tran.readObject();   // 모든 Object는 Object가 섞여 있어 보안에 유리하다.
+             Object o = (Object)block_tran.readObject();   
              
              char c = o.toString().charAt(0);
                                 
-             // 계속해서 들어오는 Object를 어떻게 쌓을까 알고리즘 필요.             
-             // 1. 0~10사이는 다 처리한다. 양이 많아도
-             // 1. 10분간 1000까지만 처리한다
-             // 2. 시간 단위로 다 받는다.             
+                        
              
              if (c == 't') {
              
@@ -253,7 +250,7 @@ class ServerThread extends Thread {
             	     
             	     System.out.println("Block을 수신 받았습니다.");               	 
             	     Block block_tmp = (Block)o;
-            	     // 총 수신 모델 만듬
+            	     
             	                 	     
                      String a = block_tmp.valueOftimestamps();              
                      String b = a.substring(14,16);              
@@ -325,7 +322,7 @@ class ServerThread extends Thread {
              }
              
              System.out.println("");                           
-             socket.close();   // Object를 받고 접속한 Client와 Socket 연결을 종료 한다.             
+             socket.close();                
               
              } 
     	     catch (IOException ex) {
@@ -338,5 +335,3 @@ class ServerThread extends Thread {
              }
     }
 }
-
-
