@@ -158,7 +158,7 @@ public class Kcoinclient {
 		        		                		         		        		         		        		         
 		        		         block[index] = new Block();          
 		        		          		         
-		        		         System.out.println("몇번째 블락:" + index);
+		        		         System.out.println("block index:" + index);
 		        		         
 		        		         block[index].settimestamps(df1.format(date));
 		        		         
@@ -184,7 +184,7 @@ public class Kcoinclient {
 		        	         
 		        	         System.out.println("");
 			        		 System.out.format("%s%n%s%n%n", time.getDisplayName(),df.format(date));
-			        		 System.out.println("모든 노드에 Block 전송");
+			        		 System.out.println("send block to every node");
 			        	
 			        		 System.out.println("");
 			        		 System.out.println("");
@@ -206,7 +206,7 @@ public class Kcoinclient {
 		        		                		         		        		         		        		         
 		        		         block[index] = new Block();       
 		        		             		        		           
-		        		         System.out.println("몇번째 블락:" + index);
+		        		         System.out.println("block index:" + index);
 		        		         block[index].settimestamps(df1.format(date));
 		        		        	    
 		        		   	     for (int i = 0; i < 1000; i++) {  	        		   	    	 
@@ -231,7 +231,7 @@ public class Kcoinclient {
 		        	         
 		        	         System.out.println("");
 			        		 System.out.format("%s%n%s%n%n", time.getDisplayName(),df.format(date));
-			        		 System.out.println("모든 노드에 Block 전송");
+			        		 System.out.println("send block to everynode");
 			        	
 			        		 System.out.println("");
 			        		 System.out.println("");
@@ -252,7 +252,7 @@ public class Kcoinclient {
 		        		                		         		        		         		        		         
 		        		         block[index] = new Block();            
 		        		             		        		           
-		        		         System.out.println("몇번째 블락:" + index);
+		        		         System.out.println("block index:" + index);
 		        		         
 		        		         block[index].settimestamps(df1.format(date));
 		        		         
@@ -278,7 +278,7 @@ public class Kcoinclient {
 		        	         
 		        	         System.out.println("");
 			        		 System.out.format("%s%n%s%n%n", time.getDisplayName(),df.format(date));
-			        		 System.out.println("모든 노드에 Block 전송");
+			        		 System.out.println("send block to every node");
 			        	
 			        		 System.out.println("");
 			        		 System.out.println("");
@@ -298,7 +298,7 @@ public class Kcoinclient {
 		        		         ObjectOutputStream block_out = new ObjectOutputStream(socket.getOutputStream());	         		
 		        		                		         		        		         		        		         
 		        		         block[index] = new Block();            		        		             		        		           
-		        		         System.out.println("몇번째 블락:" + index);
+		        		         System.out.println("block index:" + index);
 		        		        
 		        		         block[index].settimestamps(df1.format(date));
 		        		         
@@ -325,7 +325,7 @@ public class Kcoinclient {
 		        	         
 		        	         System.out.println("");
 			        		 System.out.format("%s%n%s%n%n", time.getDisplayName(),df.format(date));
-			        		 System.out.println("모든 노드에 Block 전송");
+			        		 System.out.println("send block to every node");
 			        	
 			        		 System.out.println("");
 			        		 System.out.println("");
@@ -345,7 +345,7 @@ public class Kcoinclient {
 		        		         ObjectOutputStream block_out = new ObjectOutputStream(socket.getOutputStream());	         		
 		        		                		         		        		         		        		         
 		        		         block[index] = new Block();            		        		             		        		           
-		        		         System.out.println("몇번째 블락:" + index);
+		        		         System.out.println("block index:" + index);
 		        		       
 		        		         
 		        		         block[index].settimestamps(df1.format(date));
@@ -372,7 +372,7 @@ public class Kcoinclient {
 		        	         
 		        	         System.out.println("");
 			        		 System.out.format("%s%n%s%n%n", time.getDisplayName(),df.format(date));
-			        		 System.out.println("모든 노드에 Block 전송");
+			        		 System.out.println("send block to every node");
 			        	
 			        		 System.out.println("");
 			        		 System.out.println("");
@@ -393,7 +393,7 @@ public class Kcoinclient {
 		        		         ObjectOutputStream block_out = new ObjectOutputStream(socket.getOutputStream());	         		
 		        		                		         		        		         		        		         
 		        		         block[index] = new Block();            		        		             		        		           
-		        		         System.out.println("몇번째 블락:" + index);
+		        		         System.out.println("block index:" + index);
 		        		         
 		        		         block[index].settimestamps(df1.format(date));
 		        		         
@@ -421,7 +421,7 @@ public class Kcoinclient {
 		        	         
 		        	         System.out.println("");
 			        		 System.out.format("%s%n%s%n%n", time.getDisplayName(),df.format(date));
-			        		 System.out.println("모든 노드에 Block 전송");
+			        		 System.out.println("send block to every node");
 			        	
 			        		 System.out.println("");
 			        		 System.out.println("");
@@ -478,7 +478,7 @@ public class Kcoinclient {
 	   
 	   private void showButton() {
 		   
-	        Button btnOk = new Button("계좌확인");
+	        //Button btnOk = new Button("계좌확인");
 	        Button btnSubmit = new Button("Submit");
 	        Button btnCancel = new Button("Cancel");
 	         
@@ -506,11 +506,11 @@ public class Kcoinclient {
 	        //coin.setAlignment(Label.CENTER);
 	        coin.setText("Coin");
 	        
-	        btnOk.addActionListener(new ActionListener() {
-	            public void actionPerformed(ActionEvent e) {
-	                statusLabel.setText("계좌가 확인 되었습니다");
-	            }
-	        });
+	        //btnOk.addActionListener(new ActionListener() {
+	        //    public void actionPerformed(ActionEvent e) {
+	        //        statusLabel.setText("계좌가 확인 되었습니다");
+	        //    }
+	        //});
 	             	        	        
 	        btnSubmit.addActionListener(new ActionListener() {
 	            public void actionPerformed(ActionEvent e) {
@@ -534,7 +534,7 @@ public class Kcoinclient {
        		           		        
         	        	System.out.println(tran_info.valueOftimestamps());
         	        	
-        	        	System.out.println("transaction 객체 전송");
+        	        	System.out.println("transfer transaction");
         	        	       	        	
         	        	tran_out.writeObject(tran_info);
        		       
@@ -547,18 +547,18 @@ public class Kcoinclient {
        		         }
        	       	            	        
        	             System.out.println("");
-	        		 System.out.println("거래 내용 전송");
+	        		 System.out.println("transfer transaction");
 	        	     System.out.println("");
 	        	     
 	                 try {
-	                	 statusLabel.setText("전송 중....");  
+	                	 statusLabel.setText("transfering....");  
 	                     Thread.sleep(3000);
 	                      
 	                  } catch (InterruptedException ie) {
 	                      ie.printStackTrace();
 	                  }
 	        	     
-	        	     statusLabel.setText("전송이 완료 되었습니다");  
+	        	     statusLabel.setText("transfer finished");  
 	        	     
 	            }
 	        });
